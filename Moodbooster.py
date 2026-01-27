@@ -1,5 +1,8 @@
 import sys
 
+import requests
+
+from api_keys import API_KEY_API_NINJAS, API_NINJAS_BASE_URL
 
 def hoofdmenu():
     """
@@ -10,7 +13,7 @@ def hoofdmenu():
       of afsluiten.
 
       Returns:
-          None
+          keuze getal (1 - 4)
       """
     print(
         "\n✨ Welkom bij MoodBooster ✨\n"
@@ -27,10 +30,8 @@ def hoofdmenu():
             keuze = int(input("Selecteer je optie (1 - 4): "))
             if 1 <= keuze <= 4:
                 return keuze
-            print("Kies een getal tussen 1 en 4.")
+            print("Kies een getal tussen 1 en 4: ")
         except ValueError:
-            print("Voer een geldig getal in: ", file=sys.stderr)
-        except TypeError:
             print("Voer een geldig getal in: ", file=sys.stderr)
 
 def keuze_hoofdmenu ():
@@ -57,14 +58,38 @@ def motivatie_menu():
       Returns:
           None
       """
-    return(
+    print(
         "\n💡 Motivatie\n"
         "Waar heb je vandaag behoefte aan?\n\n"
-        "1. Focus\n"
-        "2. Doorzetten\n"
-        "3. Zelfvertrouwen\n"
-        "0. Terug naar hoofdmenu\n"
+        "1. Inspiratie\n"
+        "2. Moed\n"
+        "3. Succes\n"
+        "4. Terug naar hoofdmenu\n"
     )
+
+    while True:
+        try:
+            keuze = int(input("Selecteer je optie (1 - 4): "))
+            if 1 <= keuze <= 4:
+                return keuze
+            print("Kies een getal tussen 1 en 4: ")
+        except ValueError:
+            print("Voer een geldig getal in: ", file=sys.stderr)
+
+def keuze_motivatie_menu():
+    while True:
+        keuze = motivatie_menu()
+
+        if keuze == 1:
+            categorie = "inspirational"  # let op: categorie moet bestaan bij API Ninjas
+        elif keuze == 2:
+            categorie = "courage"
+        elif keuze == 3:
+            categorie = "success"
+        elif keuze == 4:
+            return hoofdmenu()
+
+        print(haal_quote_op(categorie))
 
 def motivatie_actie_menu():
     """
@@ -83,7 +108,28 @@ def motivatie_actie_menu():
         "0. Terug naar hoofdmenu\n"
     )
 
-#Soorten grap aanpassen
+def haal_quote_op (categorie):
+    headers = {
+        "X-Api-Key" : API_KEY_API_NINJAS
+    }
+
+    params = {
+        "categories": categorie
+    }
+
+    response = requests.get(API_NINJAS_BASE_URL, headers=headers, params=params)
+    if response.ok:
+        data = response.json()
+        quote = data[0]["quote"]
+        author = data[0]["author"]
+        return f"{quote} - {author}"
+
+    else:
+        print(f"Er is iets misgegaan. Status code: {response.status_code}")
+
+
+
+
 def grap_menu():
     """
         Toont het grappen-menu.
