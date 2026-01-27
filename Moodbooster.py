@@ -1,3 +1,5 @@
+import sys
+
 
 def hoofdmenu():
     """
@@ -10,15 +12,41 @@ def hoofdmenu():
       Returns:
           None
       """
-    return(
+    print(
         "\n✨ Welkom bij MoodBooster ✨\n"
         + "-" * 30 + "\n"
         "Wat kan ik vandaag voor je doen?\n\n"
         "1. Geef me een motiverende boost\n"
         "2. Verras me met een grap\n"
         "3. Ik voel me overweldigd, geef me overzicht\n"
-        "0. Afsluiten\n"
+        "4. Afsluiten\n"
     )
+
+    while True:
+        try:
+            keuze = int(input("Selecteer je optie (1 - 4): "))
+            if 1 <= keuze <= 4:
+                return keuze
+            print("Kies een getal tussen 1 en 4.")
+        except ValueError:
+            print("Voer een geldig getal in: ", file=sys.stderr)
+        except TypeError:
+            print("Voer een geldig getal in: ", file=sys.stderr)
+
+def keuze_hoofdmenu ():
+
+    while True:
+        user_input = hoofdmenu()
+
+        if user_input == 1:
+            return motivatie_menu()
+        elif user_input == 2:
+            return grap_menu()
+        elif user_input == 3:
+            return todo_menu()
+        elif user_input == 4:
+            print("Tot ziens! 👋")
+            break
 
 def motivatie_menu():
     """
@@ -112,4 +140,4 @@ def todo_menu():
     )
 
 
-print(hoofdmenu())
+print(keuze_hoofdmenu())
