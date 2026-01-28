@@ -4,16 +4,33 @@ import requests
 
 from api_keys import API_KEY_API_NINJAS, API_NINJAS_BASE_URL
 
-def hoofdmenu():
-    """
-      Toont het hoofdmenu.
+# Algemene functies
 
-      Dit menu is het startpunt van de applicatie. De gebruiker kiest hier
-      welke hoofdfunctionaliteit gestart wordt: motivatie, grap, overzicht/to-do,
-      of afsluiten.
+def vraag_menu_keuze(vraag: str, min_keuze: int, max_keuze: int):
+    """ Vraagt de input en vangt error's op
+
+    params: vraag(str): De keuze die de gebruiker kan maken in het menu
+            min_keuze(int): Minimal keuze
+            max_keuze(int): Maximale keuze
+
+    Returns: keuze
+    """
+    while True:
+        try:
+            keuze = int(input(vraag))
+            if min_keuze <= keuze <= max_keuze:
+                return keuze
+            print(f"Kies een getal tussen {min_keuze} en {max_keuze}: ")
+        except ValueError:
+            print(f"Voer een geldig getal in ({min_keuze} - {max_keuze}): ", file=sys.stderr)
+
+# Hoofdmenu
+
+def print_hoofdmenu():
+    """Print het hoofdmenu.
 
       Returns:
-          keuze getal (1 - 4)
+          print hoofdmenu
       """
     print(
         "\n✨ Welkom bij MoodBooster ✨\n"
@@ -25,73 +42,68 @@ def hoofdmenu():
         "4. Afsluiten\n"
     )
 
-    while True:
-        try:
-            keuze = int(input("Selecteer je optie (1 - 4): "))
-            if 1 <= keuze <= 4:
-                return keuze
-            print("Kies een getal tussen 1 en 4: ")
-        except ValueError:
-            print("Voer een geldig getal in: ", file=sys.stderr)
-
 def keuze_hoofdmenu ():
+    """
+    Vraagt om gekozen input
+    Roep het gekozen menu aan of sluit af indien gewenst
+
+    :return: gekozen menu of afsluiten
+    """
 
     while True:
-        user_input = hoofdmenu()
+        print_hoofdmenu()
+        keuze = vraag_menu_keuze("Selecteer je optie (1 - 4): ", 1,4)
 
-        if user_input == 1:
-            return motivatie_menu()
-        elif user_input == 2:
-            return grap_menu()
-        elif user_input == 3:
-            return todo_menu()
-        elif user_input == 4:
+        if keuze == 1:
+            keuze_motivatie_menu()
+        elif keuze == 2:
+            keuze_grap_menu()
+        elif keuze == 3:
+            keuze_todo_menu()
+        elif keuze == 4:
             print("Tot ziens! 👋")
             break
 
-def motivatie_menu():
+# Motivatie
+
+def print_motivatie_menu():
     """
       Toont het motivatie-menu.
 
-      De gebruiker kiest een categorie (Focus, Doorzetten, Zelfvertrouwen.
-
       Returns:
-          None
+          print van het motivatie menu
       """
     print(
         "\n💡 Motivatie\n"
         "Waar heb je vandaag behoefte aan?\n\n"
-        "1. Inspiratie\n"
-        "2. Moed\n"
-        "3. Succes\n"
+        "1. Inspiratie quote\n"
+        "2. Moed quote\n"
+        "3. Succes quote\n"
         "4. Terug naar hoofdmenu\n"
     )
 
-    while True:
-        try:
-            keuze = int(input("Selecteer je optie (1 - 4): "))
-            if 1 <= keuze <= 4:
-                return keuze
-            print("Kies een getal tussen 1 en 4: ")
-        except ValueError:
-            print("Voer een geldig getal in: ", file=sys.stderr)
-
 def keuze_motivatie_menu():
+    """
+    Motivatie-menu loop
+    :return: quote met passende categorie of naar het hoofdmenu
+    """
     while True:
-        keuze = motivatie_menu()
+        print_motivatie_menu()
+        keuze = vraag_menu_keuze("Selecteer je optie: (1 - 4): ", 1,4)
 
         if keuze == 1:
-            categorie = "inspirational"  # let op: categorie moet bestaan bij API Ninjas
+            categorie = "inspirational"
         elif keuze == 2:
             categorie = "courage"
         elif keuze == 3:
             categorie = "success"
         elif keuze == 4:
-            return hoofdmenu()
+            return
 
         print(haal_quote_op(categorie))
+        keuze_actie_motivatie_menu(categorie)
 
-def motivatie_actie_menu():
+def print_motivatie_actie_menu():
     """
         Toont het vervolgmenu na het tonen van een quote.
 
@@ -99,53 +111,58 @@ def motivatie_actie_menu():
         of teruggaan naar het hoofdmenu.
 
         Returns:
-            None
+            print van het actie motivatie menu
         """
-    return(
-        "\nWat wil je nu doen?\n\n"
+    print("\nWat wil je nu doen?\n\n"
         "1. Nog een quote\n"
         "2. Andere categorie kiezen\n"
-        "0. Terug naar hoofdmenu\n"
-    )
+        "3. Terug naar hoofdmenu\n")
+
+def keuze_actie_motivatie_menu(categorie):
+    while True:
+        print_motivatie_actie_menu()
+        keuze = vraag_menu_keuze("Selecteer je optie (1 - 3): ", 1,3)
+
+        if keuze == 1:
+            print(haal_quote_op(categorie))
+        elif keuze == 2:
+            keuze_motivatie_menu()
+        elif keuze == 3:
+            keuze_hoofdmenu()
 
 def haal_quote_op (categorie):
-    headers = {
-        "X-Api-Key" : API_KEY_API_NINJAS
-    }
-
-    params = {
-        "categories": categorie
-    }
+    """
+    Haalt quote op via API Ninja
+    :param categorie:
+    :return: quote + auteur
+    """
+    headers = {"X-Api-Key" : API_KEY_API_NINJAS}
+    params = {"categories": categorie}
 
     response = requests.get(API_NINJAS_BASE_URL, headers=headers, params=params)
     if response.ok:
         data = response.json()
         quote = data[0]["quote"]
         author = data[0]["author"]
-        return f"{quote} - {author}"
+        return f"\nJouw inspiratie quote is:\n{quote} - {author}"
 
     else:
-        print(f"Er is iets misgegaan. Status code: {response.status_code}")
+        return f"Er is iets misgegaan. Status code: {response.status_code}"
 
 
-
-
-def grap_menu():
+def print_grap_menu():
     """
         Toont het grappen-menu.
 
-        De gebruiker kiest het type grap. Op basis van deze keuze kan de applicatie.
-
         Returns:
-            None
+            print grap menu
         """
-    return(
+    print(
         "\n😂 Tijd voor een glimlach\n"
         "Wat voor grap mag het zijn?\n\n"
         "1. Programmeer / nerdy grap\n"
         "2. Algemene grap\n"
-        "0. Terug naar hoofdmenu\n"
-    )
+        "0. Terug naar hoofdmenu\n")
 
 def grap_actie_menu():
     """
@@ -163,7 +180,7 @@ def grap_actie_menu():
         "0. Terug naar hoofdmenu\n"
     )
 
-def todo_menu():
+def print_todo_menu():
     """
        Toont het to-do menu voor wanneer de gebruiker overweldigd is.
 
@@ -174,7 +191,7 @@ def todo_menu():
            None
        """
 
-    return(
+    print(
         "\n🧠 Rust in je hoofd\n"
         "Wat wil je doen?\n\n"
         "1. Taak toevoegen\n"
@@ -182,8 +199,10 @@ def todo_menu():
         "3. Taak verwijderen\n"
         "4. Sorteren op prioriteit\n"
         "5. Sorteren op stressniveau\n"
-        "0. Terug naar hoofdmenu\n"
-    )
+        "0. Terug naar hoofdmenu\n")
 
 
-print(keuze_hoofdmenu())
+def main():
+    keuze_hoofdmenu()
+
+main()
