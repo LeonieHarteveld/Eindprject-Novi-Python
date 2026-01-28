@@ -4,6 +4,8 @@ import requests
 
 from api_keys import API_KEY_API_NINJAS, API_NINJAS_BASE_URL
 
+to_do_lijst = []
+
 # Algemene functies
 
 def vraag_menu_keuze(vraag: str, min_keuze: int, max_keuze: int):
@@ -59,7 +61,7 @@ def keuze_hoofdmenu ():
         elif keuze == 2:
             keuze_grap_menu()
         elif keuze == 3:
-            keuze_todo_menu()
+            keuze_to_do_list()
         elif keuze == 4:
             print("Tot ziens! 👋")
             break
@@ -188,7 +190,7 @@ def print_todo_menu():
        sorteren.
 
        Returns:
-           None
+           print van to do menu
        """
 
     print(
@@ -199,7 +201,34 @@ def print_todo_menu():
         "3. Taak verwijderen\n"
         "4. Sorteren op prioriteit\n"
         "5. Sorteren op stressniveau\n"
-        "0. Terug naar hoofdmenu\n")
+        "6. Terug naar hoofdmenu\n")
+
+def keuze_to_do_list ():
+    while True:
+        print_todo_menu()
+        keuze = vraag_menu_keuze("Selecteer je optie: (1 - 6): ", 1,6)
+
+        if keuze == 1:
+            taak = input("Voer de uit te voeren taak in: ")
+            prioriteit = int(input("Hoe hoog is de prioriteit (1 - 5): "))
+            stressniveau = int(input("Hoe hoog is het stressniveau (1 - 5): "))
+
+
+            to_do_lijst.append( {
+                "taak": taak,
+                "prioriteit": prioriteit,
+                "stressniveau": stressniveau
+            })
+
+            print(f'"{taak}" is toegevoegd aan de to do lijst')
+            print("*" * 50)
+
+        if keuze == 2:
+            if not to_do_lijst:
+                print("Je to-do lijst is leeg")
+            else:
+                for taken in to_do_lijst:
+                    print(taken["taak"])
 
 
 def main():
