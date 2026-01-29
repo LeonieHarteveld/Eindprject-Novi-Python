@@ -1,44 +1,40 @@
 import sys
+from operator import itemgetter
+
 import requests
 
 from api_keys import API_KEY_API_NINJAS, API_NINJAS_BASE_URL
 
+to_do_lijst = []
 
-# ---------------------------
-# Algemene helpers
-# ---------------------------
+# Algemene functies
 
-def vraag_menu_keuze(vraag: str, min_keuze: int, max_keuze: int) -> int:
-    """
-    Vraagt input en valideert een numerieke menu-keuze.
+def vraag_menu_keuze(vraag: str, min_keuze: int, max_keuze: int):
+    """ Vraagt de input en vangt error's op
 
-    Args:
-        vraag: input prompt
-        min_keuze: minimale geldige keuze
-        max_keuze: maximale geldige keuze
+    params: vraag(str): De keuze die de gebruiker kan maken in het menu
+            min_keuze(int): Minimal keuze
+            max_keuze(int): Maximale keuze
 
-    Returns:
-        int: keuze binnen [min_keuze, max_keuze]
+    Returns: keuze
     """
     while True:
         try:
             keuze = int(input(vraag))
             if min_keuze <= keuze <= max_keuze:
                 return keuze
-            print(f"Kies een getal tussen {min_keuze} en {max_keuze}.")
+            print(f"Kies een getal tussen {min_keuze} en {max_keuze}:")
         except ValueError:
-            print(
-                f"Voer een geldig getal in ({min_keuze} - {max_keuze}).",
-                file=sys.stderr
-            )
+            print(f"Voer een geldig getal in ({min_keuze} - {max_keuze}): ", file=sys.stderr)
 
-
-# ---------------------------
 # Hoofdmenu
-# ---------------------------
 
-def print_hoofdmenu() -> None:
-    """Print het hoofdmenu."""
+def print_hoofdmenu():
+    """Print het hoofdmenu.
+
+      Returns:
+          print hoofdmenu
+      """
     print(
         "\n✨ Welkom bij MoodBooster ✨\n"
         + "-" * 30 + "\n"
@@ -49,30 +45,37 @@ def print_hoofdmenu() -> None:
         "4. Afsluiten\n"
     )
 
+def keuze_hoofdmenu ():
+    """
+    Vraagt om gekozen input
+    Roep het gekozen menu aan of sluit af indien gewenst
 
-def keuze_hoofdmenu() -> None:
-    """Hoofdloop van de applicatie."""
+    :return: gekozen menu of afsluiten
+    """
+
     while True:
         print_hoofdmenu()
-        keuze = vraag_menu_keuze("Selecteer je optie (1 - 4): ", 1, 4)
+        keuze = vraag_menu_keuze("Selecteer je optie (1 - 4): ", 1,4)
 
         if keuze == 1:
             keuze_motivatie_menu()
         elif keuze == 2:
-            keuze_grap_menu()   # placeholder (werkt, maar simpel)
+            keuze_grap_menu()
         elif keuze == 3:
-            keuze_todo_menu()   # placeholder (werkt, maar simpel)
+            keuze_to_do_list()
         elif keuze == 4:
             print("Tot ziens! 👋")
             break
 
-
-# ---------------------------
 # Motivatie
-# ---------------------------
 
-def print_motivatie_menu() -> None:
-    """Print het motivatie-menu."""
+def print_motivatie_menu():
+    """
+      Toont het motivatie-menu.
+
+      Returns:
+          print van het motivatie menu
+      """
     print(
         "\n💡 Motivatie\n"
         "Waar heb je vandaag behoefte aan?\n\n"
@@ -82,25 +85,15 @@ def print_motivatie_menu() -> None:
         "4. Terug naar hoofdmenu\n"
     )
 
-
-def print_motivatie_actie_menu() -> None:
-    """Print het actie-menu na een quote."""
-    print(
-        "\nWat wil je nu doen?\n\n"
-        "1. Nog een quote (zelfde categorie)\n"
-        "2. Andere categorie kiezen\n"
-        "3. Terug naar hoofdmenu\n"
-    )
-
-
-def keuze_motivatie_menu() -> None:
+def keuze_motivatie_menu():
     """
-    Motivatie-menu loop.
-    Keuze 4 returnt terug naar het hoofdmenu (caller).
+    Motivatie-menu loop
+    :return: quote met passende categorie of naar het hoofdmenu
     """
     while True:
         print_motivatie_menu()
-        keuze = vraag_menu_keuze("Selecteer je optie (1 - 4): ", 1, 4)
+        keuze = vraag_menu_keuze("Selecteer je optie: (1 - 4): ", 1,4)
+        categorie = ""
 
         if keuze == 1:
             categorie = "inspirational"
@@ -109,128 +102,211 @@ def keuze_motivatie_menu() -> None:
         elif keuze == 3:
             categorie = "success"
         elif keuze == 4:
-            return  # terug naar hoofdmenu
+            break
 
-        # Toon eerste quote
-        print(haal_quote_op(categorie))
+        return categorie
 
-        # Daarna actie-menu (nog een quote / andere categorie / terug)
-        actie = keuze_actie_motivatie_menu(categorie)
+        # print(haal_quote_op(categorie))
+        # keuze_actie_motivatie_menu(categorie)
 
-        if actie == "andere_categorie":
-            continue  # opnieuw motivatie-menu tonen
-        elif actie == "terug_hoofdmenu":
-            return
-
-
-def keuze_actie_motivatie_menu(categorie: str) -> str:
+def print_motivatie_actie_menu():
     """
-    Actie-menu na een quote.
+        Toont het vervolgmenu na het tonen van een quote.
 
-    Returns:
-        "nog_een" (blijft in dit menu),
-        "andere_categorie" (terug naar motivatie-menu),
-        "terug_hoofdmenu" (terug naar hoofdmenu).
-    """
+        De gebruiker kan een nieuwe quote opvragen, van categorie wisselen,
+        of teruggaan naar het hoofdmenu.
+
+        Returns:
+            print van het actie motivatie menu
+        """
+    print("\nWat wil je nu doen?\n\n"
+        "1. Nog een quote\n"
+        "2. Andere categorie kiezen\n"
+        "3. Terug naar hoofdmenu\n")
+
+def keuze_actie_motivatie_menu(categorie):
     while True:
         print_motivatie_actie_menu()
-        keuze = vraag_menu_keuze("Selecteer je optie (1 - 3): ", 1, 3)
+        keuze = vraag_menu_keuze("Selecteer je optie (1 - 3): ", 1,3)
 
         if keuze == 1:
             print(haal_quote_op(categorie))
         elif keuze == 2:
-            return "andere_categorie"
+            keuze_motivatie_menu()
         elif keuze == 3:
-            return "terug_hoofdmenu"
+            keuze_hoofdmenu()
 
-
-def haal_quote_op(categorie: str) -> str:
-    """Haalt een quote op via API Ninjas en geeft een string terug."""
-    headers = {"X-Api-Key": API_KEY_API_NINJAS}
+def haal_quote_op (categorie):
+    """
+    Haalt quote op via API Ninja
+    :param categorie:
+    :return: quote + auteur
+    """
+    headers = {"X-Api-Key" : API_KEY_API_NINJAS}
     params = {"categories": categorie}
 
-    try:
-        response = requests.get(API_NINJAS_BASE_URL, headers=headers, params=params, timeout=10)
-    except requests.RequestException as e:
-        return f"Netwerkfout bij ophalen quote: {e}"
-
+    response = requests.get(API_NINJAS_BASE_URL, headers=headers, params=params)
     if response.ok:
         data = response.json()
-        if not data:
-            return "Geen quote gevonden (lege response)."
-        quote = data[0].get("quote", "")
-        author = data[0].get("author", "Onbekend")
-        return f"\nJouw quote ({categorie}):\n{quote} — {author}"
+        quote = data[0]["quote"]
+        author = data[0]["author"]
+        return f"\nJouw inspiratie quote is:\n{quote} - {author}"
 
-    return f"Er is iets misgegaan. Status code: {response.status_code}"
+    else:
+        return f"Er is iets misgegaan. Status code: {response.status_code}"
 
 
-# ---------------------------
-# Grap (placeholder)
-# ---------------------------
+def print_grap_menu():
+    """
+        Toont het grappen-menu.
 
-def print_grap_menu() -> None:
+        Returns:
+            print grap menu
+        """
     print(
         "\n😂 Tijd voor een glimlach\n"
         "Wat voor grap mag het zijn?\n\n"
         "1. Programmeer / nerdy grap\n"
         "2. Algemene grap\n"
-        "0. Terug naar hoofdmenu\n"
-    )
+        "3. Terug naar hoofdmenu\n")
 
+def keuze_grap_menu():
 
-def keuze_grap_menu() -> None:
-    """
-    Placeholder: zodat je programma niet crasht.
-    Later kun je hier je echte grap-API of graplogica bouwen.
-    """
     while True:
         print_grap_menu()
-        keuze = vraag_menu_keuze("Selecteer je optie (0 - 2): ", 0, 2)
+        keuze = vraag_menu_keuze("Selecteer je optie (1 - 3): ", 1, 3)
 
-        if keuze == 0:
-            return
-
-        # Tijdelijke grapjes:
         if keuze == 1:
-            print("\n🤓 Waarom kunnen programmeurs niet liegen? Omdat ze altijd ‘True’ zeggen.\n")
+            pass
+
         elif keuze == 2:
-            print("\n😄 Wat zegt een muur tegen de andere muur? Zien we je bij de hoek!\n")
+            pass
 
-        # mini actie
-        doorgaan = vraag_menu_keuze("Nog een grap? (1=ja, 0=nee): ", 0, 1)
-        if doorgaan == 0:
-            return
+        elif keuze == 3:
+            break
 
 
-# ---------------------------
-# To-do (placeholder)
-# ---------------------------
+def print_grap_actie_menu():
+    """
+      Toont het vervolg menu na het tonen van een grap.
 
-def print_todo_menu() -> None:
-    print(
-        "\n🧠 Rust in je hoofd\n"
-        "Dit onderdeel bouw je later verder.\n\n"
+      De gebruiker kan nog een grap opvragen of teruggaan
+      naar het hoofdmenu.
+
+      Returns:
+          print van het grap actie menu
+      """
+    return(
+        "\nWil je nog even doorgaan?\n\n"
+        "1. Nog een grap\n"
         "0. Terug naar hoofdmenu\n"
     )
 
+def print_todo_menu():
+    """
+       Toont het to-do menu voor wanneer de gebruiker overweldigd is.
 
-def keuze_todo_menu() -> None:
+       In dit menu kan de gebruiker taken toevoegen, bekijken, verwijderen en
+       sorteren.
+
+       Returns:
+           print van to do menu
+       """
+
+    print(
+        "\n🧠 Rust in je hoofd\n"
+        "Wat wil je doen?\n\n"
+        "1. Taak toevoegen\n"
+        "2. Taken bekijken\n"
+        "3. Taak verwijderen\n"
+        "4. Sorteren op prioriteit\n"
+        "5. Sorteren op stressniveau\n"
+        "6. Terug naar hoofdmenu\n")
+
+def keuze_to_do_list ():
     while True:
         print_todo_menu()
-        keuze = vraag_menu_keuze("Selecteer je optie (0): ", 0, 0)
-        if keuze == 0:
-            return
+        keuze = vraag_menu_keuze("Selecteer je optie: (1 - 6): ", 1,6)
+
+        if keuze == 1:
+            taak = input("Voer de uit te voeren taak in: ")
+            prioriteit = int(input("Hoe hoog is de prioriteit (1 - 5): "))
+            stressniveau = int(input("Hoe hoog is het stressniveau (1 - 5): "))
 
 
-# ---------------------------
-# Main
-# ---------------------------
+            to_do_lijst.append( {
+                "taak": taak,
+                "prioriteit": prioriteit,
+                "stressniveau": stressniveau
+            })
 
-def main() :
+            print(f'"{taak}" is toegevoegd aan de to do lijst')
+            print("-" * 50)
+
+        elif keuze == 2:
+            if not to_do_lijst:
+                print("Je to-do lijst is leeg")
+            else:
+                for taak in to_do_lijst:
+                    print(
+                        f"Taak : {taak["taak"]}\n"
+                        f"Prioriteit: {taak["prioriteit"]}\n"
+                        f"Stressniveau: {taak["stressniveau"]}\n"
+                        f"{'-' * 50}"
+                    )
+
+        elif keuze == 3:
+            if not to_do_lijst:
+                print("Je to-do lijst is leeg")
+            else:
+                taak_verwijderen = input("Welke taak wil je verwijderen?: ")
+
+                for taak in to_do_lijst:
+                    if taak["taak"].lower() == taak_verwijderen.lower():
+                        to_do_lijst.remove(taak)
+                        print(f'Taak "{taak_verwijderen}" is verwijderd')
+                        break
+                else:
+                    print("Taak niet gevonden")
+
+
+        elif keuze == 4:
+            if not to_do_lijst:
+                print("Je to-do lijst is leeg")
+            else:
+                to_do_lijst.sort(key=itemgetter("prioriteit"), reverse=True)
+
+                for taak in to_do_lijst:
+                    print(
+                        f"Taak : {taak["taak"]}\n"
+                        f"Prioriteit: {taak["prioriteit"]}\n"
+                        f"Stressniveau: {taak["stressniveau"]}\n"
+                        f"{'-' * 50}"
+
+                    )
+
+        elif keuze == 5:
+            if not to_do_lijst:
+                print("Je to-do lijst is leeg")
+            else:
+                to_do_lijst.sort(key=itemgetter("stressniveau"), reverse=True)
+
+                for taak in to_do_lijst:
+                    print(
+                        f"Taak : {taak["taak"]}\n"
+                        f"Prioriteit: {taak["prioriteit"]}\n"
+                        f"Stressniveau: {taak["stressniveau"]}\n"
+                        f"{'-' * 50}"
+
+                    )
+
+        elif keuze == 6:
+            break
+
+
+def main():
     keuze_hoofdmenu()
 
+
+
 main()
-
-
-
