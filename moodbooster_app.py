@@ -17,13 +17,16 @@ def main():
         keuze = vraag_menu_keuze("Selecteer je optie (1 - 4): ", 1, 4)
 
         if keuze == 1:
-            keuze_motivatie_menu()
+            resultaat = keuze_motivatie_menu()
+            if resultaat == "Hoofdmenu":
+                continue
+
         elif keuze == 2:
             keuze_grap_menu()
         elif keuze == 3:
             keuze_to_do_list()
         elif keuze == 4:
-            print("Tot ziens! 👋")
+            print("Tot Ziens! 👋")
             break
 
 main()

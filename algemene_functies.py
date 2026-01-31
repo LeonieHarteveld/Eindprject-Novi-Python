@@ -16,6 +16,6 @@ def vraag_menu_keuze(vraag: str, min_keuze: int, max_keuze: int):
             keuze = int(input(vraag))
             if min_keuze <= keuze <= max_keuze:
                 return keuze
-            print(f"Kies een getal tussen {min_keuze} en {max_keuze}:")
+            print(f"Kies een getal tussen {min_keuze} en {max_keuze}: \n")
         except ValueError:
             print(f"Voer een geldig getal in ({min_keuze} - {max_keuze}): ", file=sys.stderr)

@@ -35,17 +35,23 @@ def keuze_motivatie_menu():
 
         if keuze == 1:
             categorie = "inspirational"
+
         elif keuze == 2:
             categorie = "courage"
         elif keuze == 3:
             categorie = "success"
         elif keuze == 4:
-            break
+            categorie = "Hoofdmenu"
+            return "Hoofdmenu"
 
-        return categorie
 
-        # print(haal_quote_op(categorie))
-        # keuze_actie_motivatie_menu(categorie)
+        print(haal_quote_op(categorie))
+
+        actie = keuze_actie_motivatie_menu(categorie)
+        if actie == "Hoofdmenu":
+            return "Hoofdmenu"
+
+
 
 def keuze_actie_motivatie_menu(categorie):
     while True:
@@ -55,6 +61,6 @@ def keuze_actie_motivatie_menu(categorie):
         if keuze == 1:
             print(haal_quote_op(categorie))
         elif keuze == 2:
-            keuze_motivatie_menu()
+            break
         elif keuze == 3:
-            main()
+            return "Hoofdmenu"

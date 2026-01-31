@@ -4,6 +4,20 @@ from menus import print_todo_menu
 
 to_do_lijst = []
 
+def get_list ():
+    for taak in to_do_lijst:
+        print(
+            f"Taak : {taak["taak"]}\n"
+            f"Prioriteit: {taak["prioriteit"]}\n"
+            f"Stressniveau: {taak["stressniveau"]}\n"
+            f"{'-' * 50}"
+
+        )
+
+def sort_list (soort:str):
+    to_do_lijst.sort(key=itemgetter(soort), reverse=True)
+
+
 def keuze_to_do_list ():
     while True:
         print_todo_menu()
@@ -28,13 +42,7 @@ def keuze_to_do_list ():
             if not to_do_lijst:
                 print("Je to-do lijst is leeg")
             else:
-                for taak in to_do_lijst:
-                    print(
-                        f"Taak : {taak["taak"]}\n"
-                        f"Prioriteit: {taak["prioriteit"]}\n"
-                        f"Stressniveau: {taak["stressniveau"]}\n"
-                        f"{'-' * 50}"
-                    )
+                get_list()
 
         elif keuze == 3:
             if not to_do_lijst:
@@ -45,7 +53,8 @@ def keuze_to_do_list ():
                 for taak in to_do_lijst:
                     if taak["taak"].lower() == taak_verwijderen.lower():
                         to_do_lijst.remove(taak)
-                        print(f'Taak "{taak_verwijderen}" is verwijderd')
+                        print(f'\nTaak "{taak_verwijderen}" is verwijderd\n'
+                              f"{'-' * 50}")
                         break
                 else:
                     print("Taak niet gevonden")
@@ -55,31 +64,18 @@ def keuze_to_do_list ():
             if not to_do_lijst:
                 print("Je to-do lijst is leeg")
             else:
-                to_do_lijst.sort(key=itemgetter("prioriteit"), reverse=True)
+                sort_list("prioriteit")
+                get_list()
 
-                for taak in to_do_lijst:
-                    print(
-                        f"Taak : {taak["taak"]}\n"
-                        f"Prioriteit: {taak["prioriteit"]}\n"
-                        f"Stressniveau: {taak["stressniveau"]}\n"
-                        f"{'-' * 50}"
-
-                    )
 
         elif keuze == 5:
             if not to_do_lijst:
                 print("Je to-do lijst is leeg")
             else:
-                to_do_lijst.sort(key=itemgetter("stressniveau"), reverse=True)
-
-                for taak in to_do_lijst:
-                    print(
-                        f"Taak : {taak["taak"]}\n"
-                        f"Prioriteit: {taak["prioriteit"]}\n"
-                        f"Stressniveau: {taak["stressniveau"]}\n"
-                        f"{'-' * 50}"
-
-                    )
+                sort_list("stressniveau")
+                get_list()
 
         elif keuze == 6:
             break
+
+
