@@ -55,9 +55,17 @@ def print_grap_menu():
     print(
         "\n😂 Tijd voor een glimlach\n"
         "Wat voor grap mag het zijn?\n\n"
-        "1. Programmeer / nerdy grap\n"
+        "1. Programmeer grap\n"
         "2. Algemene grap\n"
-        "3. Terug naar hoofdmenu\n")
+        "3. Verras me! \n"
+        "4. Terug naar hoofdmenu\n")
+
+def print_tweedelig_single_grap (categorie):
+    print(
+       f"\n je hebt gekozen voor een {categorie} grap\n"
+       f"Wil je een single liner, of ben je in de mood voor een pun?\n"
+    )
+
 
 def print_grap_actie_menu():
     """
