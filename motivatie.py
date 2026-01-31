@@ -35,7 +35,6 @@ def keuze_motivatie_menu():
 
         if keuze == 1:
             categorie = "inspirational"
-
         elif keuze == 2:
             categorie = "courage"
         elif keuze == 3:

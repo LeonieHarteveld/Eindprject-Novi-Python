@@ -1,3 +1,5 @@
+
+
 def print_hoofdmenu():
     """Print het hoofdmenu.
 
@@ -60,10 +62,11 @@ def print_grap_menu():
         "3. Verras me! \n"
         "4. Terug naar hoofdmenu\n")
 
-def print_tweedelig_single_grap (categorie):
+def print_tweedelig_single_grap ():
     print(
-       f"\n je hebt gekozen voor een {categorie} grap\n"
-       f"Wil je een single liner, of ben je in de mood voor een pun?\n"
+       f"Wil je een single liner, of ben je in de mood voor two part grap?\n"
+       f"1. Single\n"
+       f"2. Two part\n"
     )
 
 
@@ -77,7 +80,7 @@ def print_grap_actie_menu():
       Returns:
           print van het grap actie menu
       """
-    return(
+    print(
         "\nWil je nog even doorgaan?\n\n"
         "1. Nog een grap\n"
         "0. Terug naar hoofdmenu\n"
