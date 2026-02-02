@@ -10,10 +10,10 @@ def print_hoofdmenu():
         "\n✨ Welkom bij MoodBooster ✨\n"
         + "-" * 30 + "\n"
         "Wat kan ik vandaag voor je doen?\n\n"
-        "1. Geef me een motiverende boost\n"
-        "2. Verras me met een grap\n"
-        "3. Ik voel me overweldigd, geef me overzicht\n"
-        "4. Afsluiten\n"
+        "1. 💬 Inspiratieboost (motiverende quote) \n"
+        "2. 😂 Lachmomentje (grap)\n"
+        "3. 🧠 Rust in je hoofd (to-do lijst maken)\n"
+        "0. 👋 Afsluiten\n"
     )
 
 def print_motivatie_menu():
@@ -25,11 +25,12 @@ def print_motivatie_menu():
       """
     print(
         "\n💡 Motivatie\n"
+        + "-" * 30 + "\n"
         "Waar heb je vandaag behoefte aan?\n\n"
-        "1. Inspiratie quote\n"
-        "2. Moed quote\n"
-        "3. Succes quote\n"
-        "4. Terug naar hoofdmenu\n"
+        "1. ✨ Een inspirerende quote\n"
+        "2. 💪 Een moed-gevende quote\n"
+        "3. 🚀 Een succesquote\n"
+        "0. ↩ Terug naar het hoofdmenu\n"
     )
 
 def print_motivatie_actie_menu():
@@ -42,10 +43,11 @@ def print_motivatie_actie_menu():
         Returns:
             print van het actie motivatie menu
         """
-    print("\nWat wil je nu doen?\n\n"
-          "1. Nog een quote\n"
-          "2. Andere categorie kiezen\n"
-          "3. Terug naar hoofdmenu\n")
+    print("-" * 30 + "\n" +
+        "Wat wil je nu doen?\n\n"
+        "1. 🔁 Ontvang nog een quote\n"
+        "2. 📂 Kies een andere categorie\n"
+        "0. ↩ Terug naar het hoofdmenu\n")
 
 def print_grap_menu():
     """
@@ -56,18 +58,19 @@ def print_grap_menu():
         """
     print(
         "\n😂 Tijd voor een glimlach\n"
+        + "-" * 30 + "\n"
         "Wat voor grap mag het zijn?\n\n"
-        "1. Programmeer grap\n"
-        "2. Algemene grap\n"
-        "3. Verras me! \n"
-        "4. Terug naar hoofdmenu\n")
+        "1. 💻 Een programmeergrap\n"
+        "2. 😄 Een algemene grap\n"
+        "3. 🎲 Verras me met een willekeurige grap\n"
+        "0. ↩ Terug naar het hoofdmenu\n")
 
 def print_tweedelig_single_grap ():
     print(
-       f"Wil je een single liner, of ben je in de mood voor two part grap?\n"
-       f"1. Single\n"
-       f"2. Two part\n"
-    )
+        f"{"-" * 30} \n"
+        f"Waar heb je zin in?\n\n"
+        f"1. ⚡ One-liner (korte grap)\n"
+        f"2. 🧩 Two-part grap (opzet + punchline)\n")
 
 
 def print_grap_actie_menu():
@@ -81,9 +84,10 @@ def print_grap_actie_menu():
           print van het grap actie menu
       """
     print(
+        f"{"-" * 30} \n"
         "\nWil je nog even doorgaan?\n\n"
-        "1. Nog een grap\n"
-        "0. Terug naar hoofdmenu\n"
+        "1. 😂 Ontvang nog een grap\n"
+        "0. ↩ Terug naar het hoofdmenu\n"
     )
 
 def print_todo_menu():
@@ -99,11 +103,13 @@ def print_todo_menu():
 
     print(
         "\n🧠 Rust in je hoofd\n"
-        "Wat wil je doen?\n\n"
-        "1. Taak toevoegen\n"
-        "2. Taken bekijken\n"
-        "3. Taak verwijderen\n"
-        "4. Sorteren op prioriteit\n"
-        "5. Sorteren op stressniveau\n"
-        "6. Terug naar hoofdmenu\n")
+        + "-" * 30 + "\n"
+         "Wat wil je nu doen?\n\n"
+         "1. ➕ Voeg een taak toe\n"
+         "2. 📋 Bekijk je taken\n"
+         "3. 🗑 Verwijder een taak\n"
+         "4. ⭐ Sorteer taken op prioriteit\n"
+         "5. 🌊 Sorteer taken op stressniveau\n"
+         "0. ↩ Terug naar het hoofdmenu\n"
+    )
 

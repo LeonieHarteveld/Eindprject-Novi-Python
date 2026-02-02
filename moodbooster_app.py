@@ -7,7 +7,7 @@ from todo import keuze_to_do_list
 def main():
     while True:
         print_hoofdmenu()
-        keuze = vraag_menu_keuze("Selecteer je optie (1 - 4): ", 1, 4)
+        keuze = vraag_menu_keuze("Selecteer je optie (0 - 3): ", 0, 3)
 
         if keuze == 1:
             resultaat = keuze_motivatie_menu()
@@ -21,7 +21,7 @@ def main():
 
         elif keuze == 3:
             keuze_to_do_list()
-        elif keuze == 4:
+        elif keuze == 0:
             print("Tot Ziens! 👋")
             break
 

@@ -25,7 +25,7 @@ def keuze_grap_menu():
 
     while True:
         print_grap_menu()
-        keuze = vraag_menu_keuze("Selecteer je optie (1 - 4): ", 1, 4)
+        keuze = vraag_menu_keuze("Selecteer je optie (0 - 3): ", 0, 3)
 
         if keuze == 1:
             return "Programming"
@@ -36,7 +36,7 @@ def keuze_grap_menu():
         elif keuze == 3:
             return "Any"
 
-        elif keuze == 4:
+        elif keuze == 0:
             return "Hoofdmenu"
 
 
@@ -54,7 +54,7 @@ def print_grap():
     categorie = keuze_grap_menu()
 
     if categorie == "Hoofdmenu":
-        return
+        return "Hoofdmenu"
 
     single_twopart = keuze_tweedelig_single_grap()
     grap_data = get_grap(categorie, single_twopart)
@@ -69,7 +69,8 @@ def print_grap():
     elif single_twopart == "twopart":
         print(grap_data["setup"])
         input("\n(Druk op Enter voor de punchline...)")
-        print(grap_data["delivery"])
+        print(f"\n{grap_data['delivery']}")
+
         return grap_actie_menu()
 
 
@@ -78,11 +79,13 @@ def print_grap():
 def grap_actie_menu():
     while True:
         print_grap_actie_menu()
-        actie = vraag_menu_keuze("Selecteer je optie: ", 1, 2)
+        actie = vraag_menu_keuze("Selecteer je optie (0 - 1) : ", 0, 1)
 
         if actie == 1:
-            print_grap()
-        elif actie == 2:
+            resultaat = print_grap()
+            if resultaat == "Hoofdmenu":
+                return "Hoofdmenu"
+        elif actie == 0:
             return "Hoofdmenu"
 
 

@@ -30,7 +30,7 @@ def keuze_motivatie_menu():
     """
     while True:
         print_motivatie_menu()
-        keuze = vraag_menu_keuze("Selecteer je optie: (1 - 4): ", 1,4)
+        keuze = vraag_menu_keuze("Selecteer je optie: (0 - 3): ", 0,3)
         categorie = ""
 
         if keuze == 1:
@@ -39,7 +39,7 @@ def keuze_motivatie_menu():
             categorie = "courage"
         elif keuze == 3:
             categorie = "success"
-        elif keuze == 4:
+        elif keuze == 0:
             categorie = "Hoofdmenu"
             return "Hoofdmenu"
 
@@ -55,11 +55,11 @@ def keuze_motivatie_menu():
 def keuze_actie_motivatie_menu(categorie):
     while True:
         print_motivatie_actie_menu()
-        keuze = vraag_menu_keuze("Selecteer je optie (1 - 3): ", 1,3)
+        keuze = vraag_menu_keuze("Selecteer je optie (0 - 2): ", 0,2)
 
         if keuze == 1:
             print(haal_quote_op(categorie))
         elif keuze == 2:
             break
-        elif keuze == 3:
+        elif keuze == 0:
             return "Hoofdmenu"

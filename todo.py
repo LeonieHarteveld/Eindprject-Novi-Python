@@ -10,7 +10,7 @@ def get_list ():
             f"Taak : {taak["taak"]}\n"
             f"Prioriteit: {taak["prioriteit"]}\n"
             f"Stressniveau: {taak["stressniveau"]}\n"
-            f"{'-' * 50}"
+            f"{'-' * 30}"
 
         )
 
@@ -21,7 +21,7 @@ def sort_list (soort:str):
 def keuze_to_do_list ():
     while True:
         print_todo_menu()
-        keuze = vraag_menu_keuze("Selecteer je optie: (1 - 6): ", 1,6)
+        keuze = vraag_menu_keuze("Selecteer je optie: (0 - 5): ", 0,5)
 
         if keuze == 1:
             taak = input("Voer de uit te voeren taak in: ")
@@ -36,7 +36,7 @@ def keuze_to_do_list ():
             })
 
             print(f'"{taak}" is toegevoegd aan de to do lijst')
-            print("-" * 50)
+            print("-" * 30)
 
         elif keuze == 2:
             if not to_do_lijst:
@@ -54,7 +54,7 @@ def keuze_to_do_list ():
                     if taak["taak"].lower() == taak_verwijderen.lower():
                         to_do_lijst.remove(taak)
                         print(f'\nTaak "{taak_verwijderen}" is verwijderd\n'
-                              f"{'-' * 50}")
+                              f"{'-' * 30}")
                         break
                 else:
                     print("Taak niet gevonden")
@@ -75,7 +75,7 @@ def keuze_to_do_list ():
                 sort_list("stressniveau")
                 get_list()
 
-        elif keuze == 6:
+        elif keuze == 0:
             break
 
 
