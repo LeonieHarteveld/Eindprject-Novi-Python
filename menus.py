@@ -1,7 +1,9 @@
 
 
 def print_hoofdmenu():
-    """Print het hoofdmenu.
+    """
+    Toont het hoofdmenu. De gebruiker kan kiezen tussen een motiverende quote, een grap,
+    het maken van een to lijst of afsluiten
 
       Returns:
           print hoofdmenu
@@ -19,9 +21,11 @@ def print_hoofdmenu():
 def print_motivatie_menu():
     """
       Toont het motivatie-menu.
+      De gebruiker kan kiezen tussen een inspirerende quote, moed quote,
+      succes quote of terug naar het hoofdmenu
 
       Returns:
-          print van het motivatie menu
+          print motivatie menu
       """
     print(
         "\n💡 Motivatie\n"
@@ -41,7 +45,7 @@ def print_motivatie_actie_menu():
         of teruggaan naar het hoofdmenu.
 
         Returns:
-            print van het actie motivatie menu
+            print actie motivatie menu
         """
     print("-" * 30 + "\n" +
         "Wat wil je nu doen?\n\n"
@@ -52,6 +56,8 @@ def print_motivatie_actie_menu():
 def print_grap_menu():
     """
         Toont het grappen-menu.
+        De gebruiker kan kiezen tussen een programmeergrap, algemene grap, willekeurige grap
+        of terug naar het hoofdmenu
 
         Returns:
             print grap menu
@@ -66,8 +72,13 @@ def print_grap_menu():
         "0. ↩ Terug naar het hoofdmenu\n")
 
 def print_tweedelig_single_grap ():
+    """
+    Toont het menu voor een single liner of two-part joke
+
+    :return: print menu single of two-part joke
+    """
     print(
-        f"{"-" * 30} \n"
+        f"\n{"-" * 30} \n"
         f"Waar heb je zin in?\n\n"
         f"1. ⚡ One-liner (korte grap)\n"
         f"2. 🧩 Two-part grap (opzet + punchline)\n")
@@ -81,10 +92,10 @@ def print_grap_actie_menu():
       naar het hoofdmenu.
 
       Returns:
-          print van het grap actie menu
+          print grap actie menu
       """
     print(
-        f"{"-" * 30} \n"
+        f"\n{"-" * 30} "
         "\nWil je nog even doorgaan?\n\n"
         "1. 😂 Ontvang nog een grap\n"
         "0. ↩ Terug naar het hoofdmenu\n"
@@ -92,13 +103,13 @@ def print_grap_actie_menu():
 
 def print_todo_menu():
     """
-       Toont het to-do menu voor wanneer de gebruiker overweldigd is.
+       Toont het to-do menu.
 
        In dit menu kan de gebruiker taken toevoegen, bekijken, verwijderen en
        sorteren.
 
        Returns:
-           print van to do menu
+           print to do menu
        """
 
     print(

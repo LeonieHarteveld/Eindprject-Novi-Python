@@ -2,7 +2,7 @@
 
 Dit project is gemaakt als eindopdracht voor Programming Fundamentals
 
-De MoodBooster App is een console-applicatie met meerdere onderdelen, zoals:
+De MoodBooster App is een applicatie met meerdere onderdelen:
 - Motivatieberichten
 - Grappen
 - To-do lijst
@@ -11,14 +11,14 @@ De MoodBooster App is een console-applicatie met meerdere onderdelen, zoals:
 ## Starten van de applicatie
 
 Om de applicatie te starten, run het volgende bestand:  
-`moodbooster_app.py`
+`main.py`
 
 Dit is het hoofdbestand (main) van de applicatie.
 
 
 ## Bestandsstructuur
 
-- `moodbooster_app.py` – Hoofdbestand (main)
+- `main.py` – Hoofdbestand 
 - `menus.py` – Bevat alle menu-weergaven
 - `grappen.py` – Grappen-functionaliteit (Joke API)
 - `motivatie.py` – Motivatie-functionaliteit (Ninja quote API)
@@ -30,4 +30,4 @@ Dit is het hoofdbestand (main) van de applicatie.
 
 Naam: Leonie Harteveld  
 Opleiding: Bootcamp Web Developer  
-Datum: 31-01-2026  
+Datum: 12-02-2026  

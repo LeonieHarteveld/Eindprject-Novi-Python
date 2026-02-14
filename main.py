@@ -4,6 +4,8 @@ from motivatie import keuze_motivatie_menu
 from grappen import print_grap
 from todo import keuze_to_do_list
 
+hoofdmenu = "Hoofdmenu"
+
 def main():
     while True:
         print_hoofdmenu()
@@ -11,12 +13,12 @@ def main():
 
         if keuze == 1:
             resultaat = keuze_motivatie_menu()
-            if resultaat == "Hoofdmenu":
+            if resultaat == hoofdmenu:
                 continue
 
         elif keuze == 2:
             resultaat = print_grap()
-            if resultaat == "Hoofdmenu":
+            if resultaat == hoofdmenu:
                 continue
 
         elif keuze == 3:
